@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>skyemane</title>
+
+<title>Skyemane</title>
+<link rel="icon" href="https://cdn.discordapp.com/avatars/1204381325172412466/a_e2c4a247a48f1aaf8ff86a2b4c7299ba.gif">
 
 <style>
 body {
@@ -19,84 +21,33 @@ body {
     cursor: none;
 }
 
-/* ===== EXTRA DEPTH GLOW ===== */
+/* ===== BACKGROUND ===== */
 body::before, body::after {
     content: "";
     position: absolute;
     width: 200%;
     height: 200%;
     pointer-events: none;
+    z-index: 0;
 }
 
 body::before {
-    background: radial-gradient(circle, rgba(124,58,237,0.18), transparent 60%);
-    animation: bgMove 18s infinite alternate ease-in-out;
+    background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 60%);
+    animation: move1 20s infinite alternate;
 }
 
 body::after {
-    background: radial-gradient(circle, rgba(167,139,250,0.1), transparent 70%);
-    animation: bgMove2 25s infinite alternate ease-in-out;
+    background: radial-gradient(circle, rgba(167,139,250,0.12), transparent 70%);
+    animation: move2 30s infinite alternate;
 }
 
-@keyframes bgMove {
+@keyframes move1 {
     from { transform: translate(-10%, -10%); }
     to { transform: translate(10%, 10%); }
 }
-
-@keyframes bgMove2 {
+@keyframes move2 {
     from { transform: translate(10%, -10%); }
     to { transform: translate(-10%, 10%); }
-}
-
-/* ===== CURSOR ===== */
-.cursor-dot, .cursor-ring {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 999;
-    transform: translate(-50%, -50%);
-}
-
-.cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: #ddd6fe;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #a78bfa;
-}
-
-.cursor-ring {
-    width: 40px;
-    height: 40px;
-    border: 2px solid rgba(167,139,250,0.6);
-    border-radius: 50%;
-    transition: all 0.2s ease;
-}
-
-.cursor-hover {
-    width: 70px !important;
-    height: 70px !important;
-    border-color: #c4b5fd !important;
-}
-
-/* click ripple */
-.click-wave {
-    position: fixed;
-    border: 2px solid #a78bfa;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    transform: translate(-50%, -50%);
-    animation: wave 0.6s ease-out;
-    pointer-events: none;
-}
-
-@keyframes wave {
-    to {
-        transform: translate(-50%, -50%) scale(5);
-        opacity: 0;
-    }
 }
 
 /* ===== PARTICLES ===== */
@@ -105,6 +56,8 @@ body::after {
     border-radius: 50%;
     background: #a78bfa;
     animation: float linear infinite;
+    pointer-events: none; /* 🔥 FIX */
+    z-index: 0;
 }
 
 @keyframes float {
@@ -114,23 +67,22 @@ body::after {
 
 /* ===== CARD ===== */
 .card {
-    width: 320px;
-    padding: 45px 30px;
-    border-radius: 22px;
+    width: 330px;
+    padding: 50px 30px;
+    border-radius: 24px;
     text-align: center;
     position: relative;
-    z-index: 2;
+    z-index: 10;
 
-    background: rgba(25, 12, 45, 0.65);
-    backdrop-filter: blur(25px);
+    background: rgba(25, 12, 45, 0.7);
+    backdrop-filter: blur(30px);
 
-    border: 1px solid rgba(167,139,250,0.2);
+    border: 1px solid rgba(167,139,250,0.25);
     box-shadow:
-        0 0 100px rgba(124, 58, 237, 0.3),
-        inset 0 0 30px rgba(124, 58, 237, 0.08);
+        0 0 120px rgba(124,58,237,0.35),
+        inset 0 0 40px rgba(124,58,237,0.1);
 
     transform-style: preserve-3d;
-    transition: transform 0.1s ease;
 }
 
 /* glow follow */
@@ -139,14 +91,12 @@ body::after {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,0.15), transparent 60%);
+    pointer-events: none; /* 🔥 FIX */
+    background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,0.2), transparent 60%);
     opacity: 0;
     transition: 0.3s;
 }
-
-.card:hover::after {
-    opacity: 1;
-}
+.card:hover::after { opacity: 1; }
 
 /* ===== IMAGE ===== */
 img {
@@ -157,94 +107,133 @@ img {
     object-fit: cover;
     transition: 0.4s;
 }
-
 img:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 50px rgba(167,139,250,1);
+    box-shadow: 0 0 60px rgba(167,139,250,1);
 }
 
 /* ===== TEXT ===== */
 h1 {
     margin: 18px 0 6px;
-    font-size: 28px;
-    background: linear-gradient(90deg, #ddd6fe, #a78bfa);
+    font-size: 30px;
+    background: linear-gradient(90deg, #fff, #a78bfa, #7c3aed);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-p {
-    font-size: 14px;
-    opacity: 0.85;
-    margin-bottom: 25px;
-    min-height: 40px;
+    text-shadow: 0 0 25px rgba(167,139,250,0.6);
 }
 
 /* ===== BUTTON ===== */
 .discord-btn {
     display: inline-block;
-    padding: 12px 28px;
-    background: linear-gradient(135deg, #7c3aed, #4c1d95);
-    color: white;
+    padding: 14px 32px;
     border-radius: 14px;
     text-decoration: none;
     font-weight: bold;
-    transition: 0.2s;
-    box-shadow: 0 0 25px rgba(124,58,237,0.5);
+    color: #fff;
+    cursor: pointer;
+
+    position: relative;
+    z-index: 1000; /* 🔥 FIX */
+
+    background: linear-gradient(135deg, #7c3aed, #4c1d95);
+    box-shadow: 0 0 30px rgba(124,58,237,0.6);
+    transition: 0.25s;
 }
 
 .discord-btn:hover {
-    box-shadow: 0 0 60px rgba(124,58,237,1);
+    transform: translateY(-3px) scale(1.06);
+    box-shadow: 0 0 80px rgba(124,58,237,1);
 }
 
-.footer {
-    margin-top: 18px;
-    font-size: 12px;
-    opacity: 0.5;
+.discord-btn:active {
+    transform: scale(0.95);
+}
+
+/* ===== CURSOR ===== */
+.cursor-dot, .cursor-ring {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: #ddd6fe;
+    border-radius: 50%;
+}
+
+.cursor-ring {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(167,139,250,0.6);
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.cursor-hover {
+    width: 70px !important;
+    height: 70px !important;
+}
+
+/* ripple */
+.click-wave {
+    position: fixed;
+    border: 2px solid #a78bfa;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    pointer-events: none; /* 🔥 FIX */
+    transform: translate(-50%, -50%);
+    animation: wave 0.6s ease-out;
+}
+
+@keyframes wave {
+    to {
+        transform: translate(-50%, -50%) scale(6);
+        opacity: 0;
+    }
 }
 </style>
 </head>
 
-<body onclick="startMusic()">
-
-<!-- 🎧 music -->
-<audio id="music" loop>
-    <source src="music.mp3" type="audio/mpeg">
-</audio>
+<body>
 
 <div class="cursor-dot"></div>
 <div class="cursor-ring"></div>
 
 <div class="card" id="card">
     <img src="https://cdn.discordapp.com/avatars/1204381325172412466/a_e2c4a247a48f1aaf8ff86a2b4c7299ba.gif">
-    <h1>skyemane</h1>
+
+    <h1>Skyemane</h1>
     <p id="typing"></p>
 
-    <a class="discord-btn" id="btn" href="https://discord.gg/maneps" target="_blank">
-        Join My Discord
+    <!-- ✅ WORKING BUTTON -->
+    <a class="discord-btn"
+       href="https://discord.com/invite/maneps"
+       target="_blank"
+       rel="noopener noreferrer">
+       Join My Discord
     </a>
 
-    <div class="footer">© 2026 skyemane</div>
 </div>
 
 <script>
 /* typing */
-const text="Hey 👋 I'm skyemane\nGamer • Coder • Vibing online";
+const text="Hey 👋 I'm Skyemane\nGamer • Coder • Vibing online";
 let i=0;
 (function type(){
     if(i<text.length){
         typing.innerHTML += text[i]==="\n"?"<br>":text[i];
-        i++; setTimeout(type,25);
+        i++; setTimeout(type,20);
     }
 })();
 
-/* music */
-function startMusic(){
-    document.getElementById("music").play();
-}
-
-/* cursor smooth */
+/* cursor */
 const dot=document.querySelector(".cursor-dot");
 const ring=document.querySelector(".cursor-ring");
+
 let mx=0,my=0,rx=0,ry=0;
 
 document.addEventListener("mousemove",e=>{
@@ -267,7 +256,7 @@ document.querySelectorAll("a,img").forEach(el=>{
     el.onmouseleave=()=>ring.classList.remove("cursor-hover");
 });
 
-/* click wave */
+/* ripple */
 document.addEventListener("click",e=>{
     let w=document.createElement("div");
     w.className="click-wave";
@@ -277,34 +266,7 @@ document.addEventListener("click",e=>{
     setTimeout(()=>w.remove(),600);
 });
 
-/* card glow follow */
-const card=document.getElementById("card");
-card.addEventListener("mousemove",e=>{
-    const rect=card.getBoundingClientRect();
-    const x=((e.clientX-rect.left)/rect.width)*100;
-    const y=((e.clientY-rect.top)/rect.height)*100;
-    card.style.setProperty("--x",x+"%");
-    card.style.setProperty("--y",y+"%");
-});
-
-/* 3D tilt */
-document.addEventListener("mousemove",e=>{
-    let x=(window.innerWidth/2-e.clientX)/18;
-    let y=(window.innerHeight/2-e.clientY)/18;
-    card.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
-});
-
-/* magnet */
-const btn=document.getElementById("btn");
-btn.addEventListener("mousemove",e=>{
-    let r=btn.getBoundingClientRect();
-    let x=e.clientX-r.left-r.width/2;
-    let y=e.clientY-r.top-r.height/2;
-    btn.style.transform=`translate(${x*0.25}px,${y*0.25}px)`;
-});
-btn.onmouseleave=()=>btn.style.transform="";
-
-/* particles depth */
+/* particles */
 for(let i=0;i<80;i++){
     let p=document.createElement("div");
     p.className="particle";
@@ -312,8 +274,7 @@ for(let i=0;i<80;i++){
     p.style.width=size+"px";
     p.style.height=size+"px";
     p.style.left=Math.random()*100+"vw";
-    p.style.animationDuration=(5+Math.random()*10)+"s";
-    p.style.opacity=Math.random();
+    p.style.animationDuration=(6+Math.random()*10)+"s";
     document.body.appendChild(p);
 }
 </script>
