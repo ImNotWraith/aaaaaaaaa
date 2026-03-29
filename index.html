@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>skyemane</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #12081c, #020003);
+    color: #ede9fe;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    cursor: none;
+}
+
+/* ===== EXTRA DEPTH GLOW ===== */
+body::before, body::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+}
+
+body::before {
+    background: radial-gradient(circle, rgba(124,58,237,0.18), transparent 60%);
+    animation: bgMove 18s infinite alternate ease-in-out;
+}
+
+body::after {
+    background: radial-gradient(circle, rgba(167,139,250,0.1), transparent 70%);
+    animation: bgMove2 25s infinite alternate ease-in-out;
+}
+
+@keyframes bgMove {
+    from { transform: translate(-10%, -10%); }
+    to { transform: translate(10%, 10%); }
+}
+
+@keyframes bgMove2 {
+    from { transform: translate(10%, -10%); }
+    to { transform: translate(-10%, 10%); }
+}
+
+/* ===== CURSOR ===== */
+.cursor-dot, .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: #ddd6fe;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #a78bfa;
+}
+
+.cursor-ring {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(167,139,250,0.6);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.cursor-hover {
+    width: 70px !important;
+    height: 70px !important;
+    border-color: #c4b5fd !important;
+}
+
+/* click ripple */
+.click-wave {
+    position: fixed;
+    border: 2px solid #a78bfa;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    animation: wave 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes wave {
+    to {
+        transform: translate(-50%, -50%) scale(5);
+        opacity: 0;
+    }
+}
+
+/* ===== PARTICLES ===== */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: #a78bfa;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
+}
+
+/* ===== CARD ===== */
+.card {
+    width: 320px;
+    padding: 45px 30px;
+    border-radius: 22px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+
+    background: rgba(25, 12, 45, 0.65);
+    backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(167,139,250,0.2);
+    box-shadow:
+        0 0 100px rgba(124, 58, 237, 0.3),
+        inset 0 0 30px rgba(124, 58, 237, 0.08);
+
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease;
+}
+
+/* glow follow */
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,0.15), transparent 60%);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.card:hover::after {
+    opacity: 1;
+}
+
+/* ===== IMAGE ===== */
+img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid #a78bfa;
+    object-fit: cover;
+    transition: 0.4s;
+}
+
+img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px rgba(167,139,250,1);
+}
+
+/* ===== TEXT ===== */
+h1 {
+    margin: 18px 0 6px;
+    font-size: 28px;
+    background: linear-gradient(90deg, #ddd6fe, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 25px;
+    min-height: 40px;
+}
+
+/* ===== BUTTON ===== */
+.discord-btn {
+    display: inline-block;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #7c3aed, #4c1d95);
+    color: white;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+    box-shadow: 0 0 25px rgba(124,58,237,0.5);
+}
+
+.discord-btn:hover {
+    box-shadow: 0 0 60px rgba(124,58,237,1);
+}
+
+.footer {
+    margin-top: 18px;
+    font-size: 12px;
+    opacity: 0.5;
+}
+</style>
+</head>
+
+<body onclick="startMusic()">
+
+<!-- 🎧 music -->
+<audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<div class="card" id="card">
+    <img src="https://cdn.discordapp.com/avatars/1204381325172412466/a_e2c4a247a48f1aaf8ff86a2b4c7299ba.gif">
+    <h1>skyemane</h1>
+    <p id="typing"></p>
+
+    <a class="discord-btn" id="btn" href="https://discord.gg/maneps" target="_blank">
+        Join My Discord
+    </a>
+
+    <div class="footer">© 2026 skyemane</div>
+</div>
+
+<script>
+/* typing */
+const text="Hey 👋 I'm skyemane\nGamer • Coder • Vibing online";
+let i=0;
+(function type(){
+    if(i<text.length){
+        typing.innerHTML += text[i]==="\n"?"<br>":text[i];
+        i++; setTimeout(type,25);
+    }
+})();
+
+/* music */
+function startMusic(){
+    document.getElementById("music").play();
+}
+
+/* cursor smooth */
+const dot=document.querySelector(".cursor-dot");
+const ring=document.querySelector(".cursor-ring");
+let mx=0,my=0,rx=0,ry=0;
+
+document.addEventListener("mousemove",e=>{
+    mx=e.clientX; my=e.clientY;
+    dot.style.left=mx+"px";
+    dot.style.top=my+"px";
+});
+
+(function loop(){
+    rx+=(mx-rx)*0.15;
+    ry+=(my-ry)*0.15;
+    ring.style.left=rx+"px";
+    ring.style.top=ry+"px";
+    requestAnimationFrame(loop);
+})();
+
+/* hover */
+document.querySelectorAll("a,img").forEach(el=>{
+    el.onmouseenter=()=>ring.classList.add("cursor-hover");
+    el.onmouseleave=()=>ring.classList.remove("cursor-hover");
+});
+
+/* click wave */
+document.addEventListener("click",e=>{
+    let w=document.createElement("div");
+    w.className="click-wave";
+    w.style.left=e.clientX+"px";
+    w.style.top=e.clientY+"px";
+    document.body.appendChild(w);
+    setTimeout(()=>w.remove(),600);
+});
+
+/* card glow follow */
+const card=document.getElementById("card");
+card.addEventListener("mousemove",e=>{
+    const rect=card.getBoundingClientRect();
+    const x=((e.clientX-rect.left)/rect.width)*100;
+    const y=((e.clientY-rect.top)/rect.height)*100;
+    card.style.setProperty("--x",x+"%");
+    card.style.setProperty("--y",y+"%");
+});
+
+/* 3D tilt */
+document.addEventListener("mousemove",e=>{
+    let x=(window.innerWidth/2-e.clientX)/18;
+    let y=(window.innerHeight/2-e.clientY)/18;
+    card.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
+});
+
+/* magnet */
+const btn=document.getElementById("btn");
+btn.addEventListener("mousemove",e=>{
+    let r=btn.getBoundingClientRect();
+    let x=e.clientX-r.left-r.width/2;
+    let y=e.clientY-r.top-r.height/2;
+    btn.style.transform=`translate(${x*0.25}px,${y*0.25}px)`;
+});
+btn.onmouseleave=()=>btn.style.transform="";
+
+/* particles depth */
+for(let i=0;i<80;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+    let size=Math.random()*3+1;
+    p.style.width=size+"px";
+    p.style.height=size+"px";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(5+Math.random()*10)+"s";
+    p.style.opacity=Math.random();
+    document.body.appendChild(p);
+}
+</script>
+
+</body>
+</html>
